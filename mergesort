@@ -1,0 +1,68 @@
+#include <stdio.h>
+void merge(int *A_arr, int *B_arr, int lb, int mid, int ub) {
+    int i, j, k;
+    i = lb;
+    j = mid + 1;
+    k = lb;
+
+    while (i <= mid && j <= ub) {
+        if (A_arr[i] <= A_arr[j]) {
+            B_arr[k] = A_arr[i];
+            i++;
+        } else {
+            B_arr[k] = A_arr[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i <= mid) {
+        B_arr[k] = A_arr[i];
+        i++;
+        k++;
+    }
+
+    while (j <= ub) {
+        B_arr[k] = A_arr[j];
+        j++;
+        k++;
+    }
+
+    for (k = lb; k <= ub; k++) {
+        A_arr[k] = B_arr[k];
+    }
+}
+
+void merge_sort(int *A_arr, int *B_arr, int lb, int ub) {
+    if (lb < ub) {
+        int mid = (lb + ub) / 2;
+        merge_sort(A_arr, B_arr, lb, mid);
+        merge_sort(A_arr, B_arr, mid + 1, ub);
+        merge(A_arr, B_arr, lb, mid, ub);
+    }
+}
+
+int main() {
+    int size; 
+
+    printf("Enter the number of elements you want to sort: ");
+    scanf("%d", &size);
+    int A[size]; 
+    int B[size];
+
+    printf("Enter %d elements:\n", size);
+    for (int i = 0; i < size; i++) {
+        printf("Element[%d]: ", i);
+        scanf("%d", &A[i]);
+    }
+
+    merge_sort(A, B, 0, size - 1); 
+
+    printf("Sorted array:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", A[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
