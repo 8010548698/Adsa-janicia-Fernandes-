@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h> 
+
+// Function to calculate the sum of ASCII values of characters in a string
+int asciiValues(const char *input) {
+    int sum = 0;
+    int i;
+    for (i = 0; i < strlen(input); i++) {
+        char ch = input[i];
+        int value = (int)ch;
+        printf("ASCII value of character %c is %d\n", ch, value);
+        sum += value;
+    }
+    return sum;
+}
+
+// Function to calculate the hash value
+int hash(int asciisum, int tableSize) {
+    return asciisum % tableSize;
+}
+
+int main() {
+    int tableSize;
+    int maxInputLength; // To store the maximum length the user wants
+
+    printf("Enter table size: ");
+    scanf("%d", &tableSize);
+
+    printf("Enter maximum input string length: ");
+    scanf("%d", &maxInputLength);
+    
+    while (getchar() != '\n'); 
+
+    char input[maxInputLength + 1]; 
+
+    printf("Input string: ");
+
+    fgets(input, maxInputLength + 1, stdin);
+
+    input[strcspn(input, "\n")] = 0;
+
+    int asciisum = asciiValues(input);
+    int hashValue = hash(asciisum, tableSize);
+
+    printf("Hash value of %s is %d\n", input, hashValue);
+
+    return 0;
+}
