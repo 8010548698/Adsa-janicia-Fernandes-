@@ -1,0 +1,55 @@
+#include <stdio.h>
+// Bubble Sort to arrange program lengths in ascending order
+void bubbleSort(int arr[], int n)
+{
+ for (int i = 0; i < n - 1; i++)
+ {
+ for (int j = 0; j < n - i - 1; j++)
+ {
+ if (arr[j] > arr[j + 1])
+ {
+ // Swap
+ int temp = arr[j];
+ arr[j] = arr[j + 1];
+ arr[j + 1] = temp;
+ }
+ }
+ }
+}
+int main()
+{
+ int n;
+ printf("Enter number of programs: ");
+ scanf("%d", &n);
+ int programs[n];
+ printf("Enter program lengths:\n");
+for (int i = 0; i < n; i++)
+ {
+ scanf("%d", &programs[i]);
+ }
+ // Step 1: Sort using Bubble Sort
+ bubbleSort(programs, n);
+ // Step 2: Calculate Retrieval Time and MRT
+ int retrievalTime[n];
+ retrievalTime[0] = programs[0];
+ int total = retrievalTime[0];
+ for (int i = 1; i < n; i++)
+ {
+ retrievalTime[i] = retrievalTime[i - 1] + programs[i];
+ total += retrievalTime[i];
+ }
+ double MRT = (double) total / n;
+ // Output results
+ printf("\nOptimal Order of Programs (after sorting):\n");
+ for (int i = 0; i < n; i++)
+ {
+ printf("%d ", programs[i]);
+ }
+ printf("\n\nRetrieval Times:\n");
+ for (int i = 0; i < n; i++)
+{
+ printf("Program %d : %d\n", i + 1, retrievalTime[i]);
+ }
+ printf("\nMean Retrieval Time (MRT) = %.2lf\n", MRT);
+ return 0;
+}
